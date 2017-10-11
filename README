@@ -24,7 +24,9 @@ Getting z's device coordinate is a bit tricky since the user can choose a screen
 
 When the user selects a point that is outside the sphere, it also affects the xy coordinates. To remedy this, we simply normalize the coordinates (this will also keep z = 0). Since the radius of our sphere is 1 normalizing it will have the same effect as re-calculating the xy coordinates as follows:
 
-	(r / (sqrt(xDeviceCoord^2 + yDeviceCoord^2))) * (x, y, 0)
+	xDeviceCoord = (r / (sqrt(xDeviceCoord^2 + yDeviceCoord^2))) * x
+	yDeviceCoord = (r / (sqrt(xDeviceCoord^2 + yDeviceCoord^2))) * y
+	zDeviceCoord = (r / (sqrt(xDeviceCoord^2 + yDeviceCoord^2))) * 0
 
 In this implementation, the normalizing method is utilized.
 

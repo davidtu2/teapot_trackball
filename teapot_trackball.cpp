@@ -261,6 +261,7 @@ public:
 
 		//Since r = 1, you can just simply take the dot product
 	  	angle = glm::dot(prevCoord, currentCoord);
+		//angle = glm::clamp(angle, 0.0f, 0.5f);
 
 	  	//Calculate the axis in the camera's coordinate system
 	  	axis = glm::cross(prevCoord, currentCoord);
