@@ -5,7 +5,9 @@ Assignment: teapot-trackball
  
 A toy program which renders a teapot and two light sources. 
 This program uses quaternions to make rotations on a trackball.
-The trackball implementation uses shoemaker's method.
+The trackball implementation uses Shoemaker's method.
+
+When using this program, use the left mouse button to use quaternion rotations. If you want to see Euler rotations, use the right mouse button instead. You should immediately notice that quaternion rotations are smoother.
 
 When running this program, the first thing that it will do is take the screen coordinates of your mouse click and convert them into device coordinates that are in the range: [-1, 1]. This will be the previous coordinates. If the mouse button is held, another coordinate will be recorded. They would be the current coordinates.
 
