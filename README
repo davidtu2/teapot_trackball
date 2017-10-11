@@ -33,6 +33,3 @@ In this implementation, the normalizing method is utilized.
 Once the previous and current coordinates are calculated, the calculation of rotation is straightforward. To get the angle, the dot product was taken between the coordinates, which we treat as vectors (because we assume that the origin is (0, 0, 0)). To get the axis, we simply take the cross product between the two vectors.
 
 Once the angle and axis was determined, we used quaternions to represent a rotation. Once the quaternion was created we converted it into a 4x4 rotation matrix and used it to add to the rotation of the previous iteration. That way, when the teapot gets rendered the program will accurately rotate it based on the last rotation the teapot went before.
-
-Defect(s):
-1. The teapot "resets" when the mouse button is held down in one position

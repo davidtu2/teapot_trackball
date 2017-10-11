@@ -268,14 +268,17 @@ public:
 	  	/*glm::mat3 cam2object = glm::inverse(glm::mat3(lookAtMatrix));//Or is it modelview?
 	  	axis = cam2object * axis;*/
 
-		//Set your old rotation to the prior new one
-		rotation = newRotation;
+		//This prevents the teapot from "resetting" then the button is pressed and held in one place
+		if(glm::dot(prevCoord, currentCoord) < 0.9f){
+			//Set your old rotation to the prior new one
+			rotation = newRotation;
 
-		//Update the Model-View with another rotate for the next iteration
-		Quaternion rotationQuat(axis, angle);
-		newRotation = rotationQuat.getRotationMatrix();
-		//Apply the new rotation to the old one
-		rotation *= newRotation;
+			//Update the Model-View with another rotate for the next iteration
+			Quaternion rotationQuat(axis, angle);
+			newRotation = rotationQuat.getRotationMatrix();
+			//Apply the new rotation to the old one
+			rotation *= newRotation;
+		}
 	  }
 
 	  /*Quaternion a(glm::vec3(0, 1, 0), glm::radians(90.0), "A");
