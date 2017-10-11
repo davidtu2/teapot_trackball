@@ -177,7 +177,9 @@ public:
 	double width = std::get<0>(w);
 	double height = std::get<1>(w);
 
-	//First off, we need the xy coords to be in device coords in the range: [-1, 1]
+	/*First off, we need the xy coords to be in device coords in the range: [-1, 1]
+	Y coordinate needs to be negated due to screen coordinates origin starting at the top left corner
+	The sign of y is positive going down*/
 	coordinates.x = (2*x - width)/width;
 	coordinates.y = -(2*y - height)/height;
 	coordinates.x = glm::clamp(coordinates.x, -1.0f, 1.0f);
@@ -197,6 +199,14 @@ public:
 		coordinates = glm::normalize(coordinates);
 	}
 	return coordinates;
+  }
+
+  void debug(){
+	std::cerr << "Normal Prev: " << glm::to_string(prevCoord) << std::endl;
+	std::cerr << "Normal Current: " << glm::to_string(currentCoord) << std::endl;
+	std::cerr << "angle: " << angle << std::endl;
+	std::cerr << "axis: " << glm::to_string(axis) << std::endl;
+	std::cerr << "Quaternion Rotation Matrix: " << glm::to_string(newRotation) << std::endl << std::endl;
   }
   
   bool render(){
@@ -244,23 +254,18 @@ public:
 	  if(!held){
 		//Upon the first press, get the normalized previous coordinates
 		prevCoord = shoemaker(std::get<0>(prevMousePosition), std::get<1>(prevMousePosition));
-	  	std::cerr << "Normal Prev: " << glm::to_string(prevCoord) << std::endl;
 		held = true;
 	  }else if(held){
 		//If the button is held, continuously get the normalized current coordinates
 		currentCoord = shoemaker(std::get<0>(mousePosition), std::get<1>(mousePosition));
-	  	std::cerr << "Normal Current: " << glm::to_string(currentCoord) << std::endl;
 
 		//Since r = 1, you can just simply take the dot product
 	  	angle = glm::dot(prevCoord, currentCoord);
-		
-	  	std::cerr << "angle: " << angle << std::endl;
 
 	  	//Calculate the axis in the camera's coordinate system
 	  	axis = glm::cross(prevCoord, currentCoord);
 	  	/*glm::mat3 cam2object = glm::inverse(glm::mat3(lookAtMatrix));//Or is it modelview?
 	  	axis = cam2object * axis;*/
-	  	std::cerr << "axis: " << glm::to_string(axis) << std::endl;
 
 		//Set your old rotation to the prior new one
 		rotation = newRotation;
@@ -268,8 +273,6 @@ public:
 		//Update the Model-View with another rotate for the next iteration
 		Quaternion rotationQuat(axis, angle);
 		newRotation = rotationQuat.getRotationMatrix();
-		std::cerr << "Quaternion Rotation Matrix: " << 
-			glm::to_string(newRotation) << std::endl << std::endl;
 		//Apply the new rotation to the old one
 		rotation *= newRotation;
 	  }
@@ -281,6 +284,7 @@ public:
 	  Quaternion result;
 	  result = a.multiply(b);
 	  result.debug();*/
+	  debug();
 
     }else if(mbFlags == MOUSE_BUTTON_RIGHT){
 	  //Same implementation as above, except I am using Euler's angles for comparison

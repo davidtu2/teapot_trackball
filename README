@@ -14,6 +14,8 @@ The conversion between screen coordinates to device coordinates are done via Sho
 	xDeviceCoord = ((2 * xScreenCoord) - width) / width
 	yDeviceCoord = -((2 * yScreenCoord) - height)/ height
 
+Note that the device y-coordinate is negated, that is because in screen coordinates the orgin is in the top left corner of the screen. From that origin, the y value increases as it goes down.
+
 Getting z's device coordinate is a bit tricky since the user can choose a screen coordinate that is outside the sphere. If that is the case, we simply set z = 0, otherwise the z coordinate is on the sphere and can be computed as follows:
 
 	zDeviceCoord = sqrt(1 - (xDeviceCoord^2 + yDeviceCoord^2))
