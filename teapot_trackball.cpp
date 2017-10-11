@@ -169,7 +169,8 @@ public:
   }
 
   /*This function is called "shoemaker" because it is the name of the method 
-  we are using to implement a trackball*/
+  we are using to implement a trackball
+  Note that this fuction assumes that r = 1, so the math is simplfied becasue of that*/
   glm::vec3 shoemaker(int x, int y){
 	glm::vec3 coordinates(0.0);
 	std::tuple<int, int> w = windowSize();
@@ -252,6 +253,7 @@ public:
 
 		//Since r = 1, you can just simply take the dot product
 	  	angle = glm::dot(prevCoord, currentCoord);
+		
 	  	std::cerr << "angle: " << angle << std::endl;
 
 	  	//Calculate the axis in the camera's coordinate system

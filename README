@@ -3,6 +3,23 @@ david.tu2@csu.fullerton.edu
  
 A toy program which renders a teapot and two light sources. 
 This program uses quaternions to make rotations on a trackball.
-The trackball implementation uses shoemaker's method
+The trackball implementation uses shoemaker's method.
+
+When running this program, the first thing that it will do is take the screen coordinates of your mouse click and convert them into device coordinates that are in the range: [-1, 1]. This will be the previous coordinates. If the mouse button is held, another coordinate will be recorded. They would be the current coordinates.
+
+The conversion between screen coordinates to device coordinates are done via Shoemaker's method (In fact when it is done, it's done by a method of the same name). When using Shoemaker's method, it does the following to get the xy device coordinates:
+
+	xDeviceCoord = ((2 * xScreenCoord) - width) / width
+	yDeviceCoord = -((2 * yScreenCoord) - height)/ height
+
+Getting z's device coordinate is a bit tricky since the user can choose a screen coordinate that is outside the sphere. If that is the case, we simply set z = 0, otherwise the z coordinate is on the sphere and can be computed as follows:
+
+	zDeviceCoord = sqrt(1 - (xDeviceCoord^2 + yDeviceCoord^2))
+
+When the user selects a point that is outside the sphere, it also affects the xy coordinates. To remedy this, we simply normalize the coordinates (this will also keep z = 0). Since the radius of our sphere is 1 normalizing it will have the same effect as re-calculating the xy coordinates as follows:
+
+	(r / (sqrt(xDeviceCoord^2 + yDeviceCoord^2))) * (x, y, 0)
+
+In this implementation, the normalizing method is utilized.
 
 
