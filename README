@@ -1,0 +1,8 @@
+David Tu
+david.tu2@csu.fullerton.edu
+ 
+A toy program which renders a teapot and two light sources. 
+This program uses quaternions to make rotations on a trackball.
+The trackball implementation uses shoemaker's method
+
+
